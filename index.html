@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title> workshop5 </title>
+</head>
+
+<body>
+
+    <script type="text/javascript">
+
+        const response = new XMLHttpRequest();
+        console.log(response)  
+
+        const getdata =  async () => {
+
+            const response = await fetch('data.jsn',{
+                method: 'GET',
+                headers: {'Content-Type':"application/json"}
+            }).then((data) => {
+
+                if(data.ok){
+                    return data.json().then((donn) => {
+                        console.log(donn)
+                    }).catch((error) => {console.log(error)});
+                }
+            }).catch((error) => {console.log(error)})
+        }
+
+        getdata();
+
+        /*  */
+        const players= [
+        {
+            id:1,
+            name:"Karim",
+            scores:[16,45,80]
+        },
+        {
+            id:2,
+            name:"Amine",
+            scores:[19,40,99]
+        },
+        {
+            id:3,
+            name:"hamid",
+            scores:[20,88,120]
+        }
+        ]
+        
+
+        function getArray_avg(array){
+            let avg
+            array.forEach(item=>{
+            avg = array.reduce((a, b) => a + b) / array.length;
+            });
+            return avg
+        }
+
+        function PlyerScore(pName, aScore) {
+            this.playerName = pName;
+            this.avgScore = aScore;
+          }
+
+
+        PlyerScore.prototype.getPlayerScore= function(){
+            
+          }
+
+        
+        let playersAvgScore = []
+        players.forEach(item=>{
+            
+            console.log("la moyenne des scores de " + item.name + " est: " + getArray_avg(item.scores));
+            const PlayerScore1 = new PlyerScore(item.name,getArray_avg(item.scores))
+
+            console.log(PlayerScore1)
+            playersAvgScore.push(PlayerScore1)
+            
+        });
+
+        console.log(playersAvgScore)
+
+        maxAvrg = Math.max.apply(Math, playersAvgScore.map(function(PlyerScore) { return PlyerScore.avgScore; }))
+        console.log(maxAvrg)
+        
+        playersAvgScore.forEach(item=>{
+            if(item.avgScore === maxAvrg)
+            {
+            console.log(item.playerName + " est le joueur qui a la moyenne de score la plus élevée " + maxAvrg)
+            }
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>
